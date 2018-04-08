@@ -34,7 +34,7 @@ if (not api):
 
 
 searchQuery = "#" + KEYWORD
-maxTweets = 100000
+maxTweets = 45000
 tweetsPerQry = 100
 fName = "tweets.txt"
 sinceId = yesterday if sys.argv[2] == "day" else last_week
@@ -242,4 +242,4 @@ for i in url:
 pd.DataFrame({"Para":[re.sub(r'[^\x00-\x7f]',r' ', i) for i in p],"Head":[re.sub(r'[^\x00-\x7f]',r' ', i) for i in p]}).to_csv("NYTimes.csv")
 
 with open("nytimes.txt","w") as f:
-    f.writelines([re.sub(r'[^\x00-\x7f]',r' ', i) for i in p if "advertisement" not in i.lower() and "feedback" not in i.lower()])
+    f.writelines([re.sub(r'[^\x00-\x7f]',r' ', i) for i in p])

@@ -2,24 +2,120 @@
   <head>
     <meta charset="UTF-8">
     <title>Word Cloud</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../lib/d3/d3.js" charset="utf-8"></script>
     <script src="../lib/d3/d3.layout.cloud.js"></script>
     <script src="../d3.wordcloud.js"></script>
-    <script src="example.two.js"></script>
+    <script src="unigram_daily_news.js"></script>
+    <script src="unigram_daily_twitter.js"></script>
+    <script src="bigram_daily_news.js"></script>
+    <script src="bigram_daily_twitter.js"></script>
+    <script src="unigram_weekly_news.js"></script>
+    <script src="unigram_weekly_twitter.js"></script>
+    <script src="bigram_weekly_news.js"></script>
+    <script src="bigram_weekly_twitter.js"></script>
   </head>
-  <body style="text-align: center">
-    <h1>Word Cloud</h1>
-    <div id='wordcloud'></div>
+  <body style='text-align:center'>
+    <h1>D3.js Word Cloud</h1>
+    <form  action="">
+      <input type="radio" name="one" value="unigram">Unigram<br>
+      <input type="radio" name="one" value="bigram">Bigram<br>
+    </form>
+    <form  action="">
+      <input type="radio" name="two" value="daily">Daily<br>
+      <input type="radio" name="two" value="weekly">Weekly<br>
+    </form>
+    <div class="container-fluid row">
+        <h3 class="container-fluid col-lg-6">NewsData</h3>
+        <h3 class="container-fluid col-lg-6">TwitterData</h3>
+    </div>
+    <div id="unigram_daily" class="container-fluid row">
+        <div class="container-fluid col-lg-6 news"></div>
+        <div class="container-fluid col-lg-6 twitter"></div>
+    </div>
+
+    <div id="bigram_daily" class="container-fluid row" style="display:none">
+        <div class="container-fluid col-lg-6 news"></div>
+        <div class="container-fluid col-lg-6 twitter"></div>
+    </div>
+
+    <div id="unigram_weekly" class="container-fluid row" style="display:none">
+        <div class="container-fluid col-lg-6 news"></div>
+        <div class="container-fluid col-lg-6 twitter"></div>
+    </div>
+
+    <div id="bigram_weekly" class="container-fluid row" style="display:none">
+        <div class="container-fluid col-lg-6 news"></div>
+        <div class="container-fluid col-lg-6 twitter"></div>
+    </div>
+
     <script>
-      d3.wordcloud()
-        .size([1000, 500])
+        d3.wordcloud().selector("#unigram_daily > .news")
+        .size([600, 400])
         .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
-        .words(words)
-        .onwordclick(function(d, i) {
-          if (d.href) { window.location = d.href; }
-        })
-        .start();
+        .words(unigram_daily_news).start();
+        d3.wordcloud().selector("#unigram_daily > .twitter")
+        .size([600, 400])
+        .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+        .words(unigram_daily_twitter).start();
+        d3.wordcloud().selector("#bigram_daily > .news")
+        .size([600, 400])
+        .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+        .words(bigram_daily_news).start();
+        d3.wordcloud().selector("#bigram_daily > .twitter")
+        .size([600, 400])
+        .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+        .words(bigram_daily_twitter).start();
+
+        d3.wordcloud().selector("#unigram_weekly > .news")
+          .size([600, 400])
+          .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+          .words(unigram_weekly_news).start();
+        d3.wordcloud().selector("#unigram_weekly > .twitter")
+          .size([600, 400])
+          .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+          .words(unigram_weekly_twitter).start();
+        d3.wordcloud().selector("#bigram_weekly > .news")
+          .size([600, 400])
+          .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+          .words(bigram_weekly_news).start();
+        d3.wordcloud().selector("#bigram_weekly > .twitter")
+          .size([600, 400])
+          .fill(d3.scale.ordinal().range(["#884400", "#448800", "#888800", "#444400"]))
+          .words(bigram_weekly_twitter).start();
+
+          $( "input" ).change(function() {
+              var buttons = jQuery("input:radio:checked").get();
+              var values = $.map(buttons, function(element) {
+                  return $(element).attr("value");
+              });
+              console.log(values.join()=="bigram,daily");
+              if(values.join() == "unigram,daily") {
+                  $("#unigram_daily").show();
+                  $("#bigram_daily").hide();
+                  $("#unigram_weekly").hide();
+                  $("#bigram_weekly").hide();
+              }
+              else if(values.join() == "bigram,daily") {
+                  $("#unigram_daily").hide();
+                  $("#bigram_daily").show();
+                  $("#unigram_weekly").hide();
+                  $("#bigram_weekly").hide();
+              }
+              else if(values.join() == "unigram,weekly") {
+                  $("#unigram_daily").hide();
+                  $("#bigram_daily").hide();
+                  $("#unigram_weekly").show();
+                  $("#bigram_weekly").hide();
+              }
+              else if(values.join() == "bigram,weekly") {
+                  $("#unigram_daily").hide();
+                  $("#bigram_daily").hide();
+                  $("#unigram_weekly").hide();
+                  $("#bigram_weekly").show();
+              }
+          });
     </script>
   </body>
 </html>
-

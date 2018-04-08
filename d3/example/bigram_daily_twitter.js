@@ -1,4 +1,4 @@
-var bigram_weekly_twitter = [
+var bigram_daily_twitter = [
 {text:'https co', size: 32520},
 {text:'vote retweet', size: 8892},
 {text:'approve disapprove', size: 8565},
